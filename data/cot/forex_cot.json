@@ -1,0 +1,7 @@
+{
+  "updated_at": "pending_first_run",
+  "source": "CFTC FinFutWk.txt",
+  "mirror_by": "github-actions/qep-calendar-mirror",
+  "currencies": {},
+  "count": 0
+}
