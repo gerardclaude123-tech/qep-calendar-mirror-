@@ -33,12 +33,21 @@ jobs:
             -o data/calendar_next_week.json \
             "https://nfs.faireconomy.media/ff_calendar_nextweek.json" || echo "next_week fetch failed"
 
-          if [ -f data/calendar_this_week.json ] && [ "$(wc -c < data/calendar_this_week.json)" -lt 100 ]; then
-            rm -f data/calendar_this_week.json
-          fi
-          if [ -f data/calendar_next_week.json ] && [ "$(wc -c < data/calendar_next_week.json)" -lt 100 ]; then
-            rm -f data/calendar_next_week.json
-          fi
+          # Validation tailles ET contenu JSON valide
+          for f in data/calendar_this_week.json data/calendar_next_week.json; do
+            if [ -f "$f" ]; then
+              SIZE=$(wc -c < "$f")
+              if [ "$SIZE" -lt 100 ]; then
+                echo "Removing $f (too small: $SIZE bytes)"
+                rm -f "$f"
+              elif ! python3 -c "import json; json.load(open('$f'))" 2>/dev/null; then
+                echo "Removing $f (invalid JSON)"
+                rm -f "$f"
+              else
+                echo "OK $f ($SIZE bytes)"
+              fi
+            fi
+          done
 
       - name: Combine and add metadata
         run: |
@@ -48,20 +57,38 @@ jobs:
           import os
 
           combined = []
-          if os.path.exists('data/calendar_this_week.json'):
-              with open('data/calendar_this_week.json') as f:
-                  combined += json.load(f)
-          if os.path.exists('data/calendar_next_week.json'):
-              with open('data/calendar_next_week.json') as f:
-                  combined += json.load(f)
 
+          # Try this_week (safe)
+          if os.path.exists('data/calendar_this_week.json'):
+              try:
+                  with open('data/calendar_this_week.json') as f:
+                      data = json.load(f)
+                      if isinstance(data, list):
+                          combined += data
+                          print(f"this_week: {len(data)} events")
+              except Exception as e:
+                  print(f"this_week parse error: {e}")
+
+          # Try next_week (safe)
+          if os.path.exists('data/calendar_next_week.json'):
+              try:
+                  with open('data/calendar_next_week.json') as f:
+                      data = json.load(f)
+                      if isinstance(data, list):
+                          combined += data
+                          print(f"next_week: {len(data)} events")
+              except Exception as e:
+                  print(f"next_week parse error: {e}")
+
+          # Save combined if we have data
           if combined:
               with open('data/calendar.json', 'w') as f:
                   json.dump(combined, f, separators=(',', ':'))
-              print(f"Combined: {len(combined)} events")
+              print(f"Combined: {len(combined)} events total")
           else:
-              print("No fresh data, keeping previous calendar.json")
+              print("No fresh data available, keeping existing calendar.json")
 
+          # Always write metadata (even if no fresh data)
           now = datetime.datetime.now(datetime.timezone.utc)
           high = sum(1 for e in combined if e.get('impact') == 'High')
           medium = sum(1 for e in combined if e.get('impact') == 'Medium')
