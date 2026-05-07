@@ -1,0 +1,92 @@
+name: Refresh QEP Calendar Mirror
+
+on:
+  schedule:
+    - cron: '5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Fetch ForexFactory calendar
+        run: |
+          set -euo pipefail
+          mkdir -p data
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+
+          echo "Tentative this week..."
+          curl -sSL -A "$UA" --max-time 30 --retry 3 --retry-delay 5 \
+            -o data/calendar_this_week.json \
+            "https://nfs.faireconomy.media/ff_calendar_thisweek.json" || echo "this_week fetch failed"
+
+          echo "Tentative next week..."
+          curl -sSL -A "$UA" --max-time 30 --retry 3 --retry-delay 5 \
+            -o data/calendar_next_week.json \
+            "https://nfs.faireconomy.media/ff_calendar_nextweek.json" || echo "next_week fetch failed"
+
+          if [ -f data/calendar_this_week.json ] && [ "$(wc -c < data/calendar_this_week.json)" -lt 100 ]; then
+            rm -f data/calendar_this_week.json
+          fi
+          if [ -f data/calendar_next_week.json ] && [ "$(wc -c < data/calendar_next_week.json)" -lt 100 ]; then
+            rm -f data/calendar_next_week.json
+          fi
+
+      - name: Combine and add metadata
+        run: |
+          python3 << 'PYEOF'
+          import json
+          import datetime
+          import os
+
+          combined = []
+          if os.path.exists('data/calendar_this_week.json'):
+              with open('data/calendar_this_week.json') as f:
+                  combined += json.load(f)
+          if os.path.exists('data/calendar_next_week.json'):
+              with open('data/calendar_next_week.json') as f:
+                  combined += json.load(f)
+
+          if combined:
+              with open('data/calendar.json', 'w') as f:
+                  json.dump(combined, f, separators=(',', ':'))
+              print(f"Combined: {len(combined)} events")
+          else:
+              print("No fresh data, keeping previous calendar.json")
+
+          now = datetime.datetime.now(datetime.timezone.utc)
+          high = sum(1 for e in combined if e.get('impact') == 'High')
+          medium = sum(1 for e in combined if e.get('impact') == 'Medium')
+          meta = {
+              'generated_at': now.isoformat(),
+              'total_events': len(combined),
+              'high_impact': high,
+              'medium_impact': medium,
+              'source': 'faireconomy.media',
+              'mirror_by': 'github-actions/qep-calendar-mirror',
+          }
+          with open('data/meta.json', 'w') as f:
+              json.dump(meta, f, indent=2)
+          print(f"Stats: {len(combined)} events, {high} HIGH, {medium} MED")
+          PYEOF
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/ 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-refresh calendar $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+            echo "Push successful"
+          fi
