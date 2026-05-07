@@ -1,0 +1,219 @@
+name: Refresh QEP COT Data Mirror
+
+on:
+  schedule:
+    - cron: '0 21 * * 5'
+    - cron: '0 6 * * 6'
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-cot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Fetch CFTC data
+        run: |
+          set -euo pipefail
+          mkdir -p data/cot
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+
+          echo "Fetching CFTC FinFut..."
+          curl -sSL -A "$UA" \
+            -H "Accept: text/plain, */*" \
+            --max-time 30 --retry 3 --retry-delay 5 \
+            -o data/cot/finfut_raw.txt \
+            "https://www.cftc.gov/dea/newcot/FinFutWk.txt" || echo "FinFut fetch failed"
+
+          echo "Fetching CFTC DeaCot..."
+          curl -sSL -A "$UA" \
+            -H "Accept: text/plain, */*" \
+            --max-time 30 --retry 3 --retry-delay 5 \
+            -o data/cot/deacot_raw.txt \
+            "https://www.cftc.gov/dea/newcot/deacot.txt" || echo "DeaCot fetch failed"
+
+          if [ -f data/cot/finfut_raw.txt ] && [ "$(wc -c < data/cot/finfut_raw.txt)" -lt 1000 ]; then
+            rm -f data/cot/finfut_raw.txt
+          fi
+          if [ -f data/cot/deacot_raw.txt ] && [ "$(wc -c < data/cot/deacot_raw.txt)" -lt 1000 ]; then
+            rm -f data/cot/deacot_raw.txt
+          fi
+
+      - name: Parse Forex COT
+        run: |
+          python3 << 'PYEOF'
+          import json
+          import os
+          from datetime import datetime, timezone
+
+          mapping = {
+              'EURO FX - CHICAGO MERCANTILE EXCHANGE': 'EUR',
+              'BRITISH POUND STERLING - CHICAGO MERCANTILE EXCHANGE': 'GBP',
+              'JAPANESE YEN - CHICAGO MERCANTILE EXCHANGE': 'JPY',
+              'AUSTRALIAN DOLLAR - CHICAGO MERCANTILE EXCHANGE': 'AUD',
+              'NEW ZEALAND DOLLAR - CHICAGO MERCANTILE EXCHANGE': 'NZD',
+              'CANADIAN DOLLAR - CHICAGO MERCANTILE EXCHANGE': 'CAD',
+              'SWISS FRANC - CHICAGO MERCANTILE EXCHANGE': 'CHF',
+              'U.S. DOLLAR INDEX - ICE FUTURES U.S.': 'USD',
+          }
+
+          result = {}
+          if os.path.exists('data/cot/finfut_raw.txt'):
+              with open('data/cot/finfut_raw.txt') as f:
+                  lines = f.readlines()
+              for line in lines:
+                  line_upper = line.upper()
+                  for keyword, symbol in mapping.items():
+                      if keyword in line_upper:
+                          parts = line.split(',')
+                          if len(parts) > 8:
+                              try:
+                                  ncl = float(parts[5].strip().replace('"', '') or 0)
+                                  ncs = float(parts[6].strip().replace('"', '') or 0)
+                                  total = ncl + ncs
+                                  if total > 0:
+                                      net_cot = (ncl - ncs) / total
+                                      if -1.0 <= net_cot <= 1.0:
+                                          result[symbol] = round(net_cot, 4)
+                              except (ValueError, IndexError):
+                                  pass
+                          break
+
+          forex_cot = {
+              'updated_at': datetime.now(timezone.utc).isoformat(),
+              'source': 'CFTC FinFutWk.txt',
+              'mirror_by': 'github-actions/qep-calendar-mirror',
+              'currencies': result,
+              'count': len(result),
+          }
+
+          with open('data/cot/forex_cot.json', 'w') as f:
+              json.dump(forex_cot, f, indent=2)
+
+          print(f"Forex COT: {len(result)} currencies parsed")
+          for c, v in result.items():
+              print(f"  {c}: {v:+.3f}")
+          PYEOF
+
+      - name: Parse Commodities COT
+        run: |
+          python3 << 'PYEOF'
+          import json
+          import os
+          from datetime import datetime, timezone
+
+          mapping = {
+              'GOLD - COMMODITY EXCHANGE INC.': 'XAU',
+              'SILVER - COMMODITY EXCHANGE INC.': 'XAG',
+              'CRUDE OIL, LIGHT SWEET - NEW YORK MERCANTILE EXCHANGE': 'WTI',
+              'COPPER- #1 - COMMODITY EXCHANGE INC.': 'COPPER',
+          }
+
+          result = {}
+          if os.path.exists('data/cot/deacot_raw.txt'):
+              with open('data/cot/deacot_raw.txt') as f:
+                  lines = f.readlines()
+              for line in lines:
+                  line_upper = line.upper()
+                  for keyword, symbol in mapping.items():
+                      if keyword in line_upper:
+                          parts = [p.strip().replace('"', '') for p in line.split(',')]
+                          if len(parts) > 19:
+                              try:
+                                  week_raw = parts[1] or 'UNKNOWN'
+                                  oi = int(parts[3] or 0)
+                                  pl = int(parts[4] or 0)
+                                  ps = int(parts[5] or 0)
+                                  swl = int(parts[6] or 0)
+                                  sws = int(parts[7] or 0)
+                                  mml = int(parts[9] or 0)
+                                  mms = int(parts[10] or 0)
+
+                                  prod_net = pl - ps
+                                  swap_net = swl - sws
+                                  mm_net = mml - mms
+                                  net = prod_net + swap_net + mm_net
+
+                                  week_iso = week_raw
+                                  if len(week_raw) == 6:
+                                      week_iso = f"20{week_raw[0:2]}-{week_raw[2:4]}-{week_raw[4:6]}"
+
+                                  result[symbol] = {
+                                      'net': net,
+                                      'mm_net': mm_net,
+                                      'mm_long': mml,
+                                      'mm_short': mms,
+                                      'producer_net': prod_net,
+                                      'swap_net': swap_net,
+                                      'oi': oi,
+                                      'week': week_iso,
+                                  }
+                              except (ValueError, IndexError) as e:
+                                  print(f"  Parse error for {symbol}: {e}")
+                          break
+
+          commodities_cot = {
+              'updated_at': datetime.now(timezone.utc).isoformat(),
+              'source': 'CFTC deacot.txt',
+              'mirror_by': 'github-actions/qep-calendar-mirror',
+              'instruments': result,
+              'count': len(result),
+          }
+
+          with open('data/cot/commodities_cot.json', 'w') as f:
+              json.dump(commodities_cot, f, indent=2)
+
+          print(f"Commodities COT: {len(result)} instruments parsed")
+          for c, v in result.items():
+              print(f"  {c}: net={v['net']:+}, mm_net={v['mm_net']:+}, week={v['week']}")
+          PYEOF
+
+      - name: Add metadata
+        run: |
+          python3 << 'PYEOF'
+          import json
+          import os
+          from datetime import datetime, timezone
+
+          forex_count = 0
+          commod_count = 0
+
+          if os.path.exists('data/cot/forex_cot.json'):
+              with open('data/cot/forex_cot.json') as f:
+                  forex_count = json.load(f).get('count', 0)
+          if os.path.exists('data/cot/commodities_cot.json'):
+              with open('data/cot/commodities_cot.json') as f:
+                  commod_count = json.load(f).get('count', 0)
+
+          meta = {
+              'generated_at': datetime.now(timezone.utc).isoformat(),
+              'forex_currencies_count': forex_count,
+              'commodities_count': commod_count,
+              'source': 'CFTC.gov',
+              'mirror_by': 'github-actions/qep-calendar-mirror',
+              'next_refresh': 'Friday 21:00 UTC',
+          }
+          with open('data/cot/meta.json', 'w') as f:
+              json.dump(meta, f, indent=2)
+          print(f"META: {forex_count} forex + {commod_count} commodities")
+          PYEOF
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/cot/ 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "No COT changes"
+          else
+            git commit -m "Auto-refresh COT $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+            echo "COT push successful"
+          fi
