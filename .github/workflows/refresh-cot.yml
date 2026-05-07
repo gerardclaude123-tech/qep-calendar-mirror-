@@ -19,7 +19,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Fetch and parse Forex COT (TFF)
+      - name: Fetch and parse Forex COT (TFF + USD derivation)
         run: |
           mkdir -p data/cot
           python3 << 'PYEOF'
@@ -28,22 +28,19 @@ jobs:
           import urllib.parse
           from datetime import datetime, timezone
 
-          # Forex Traders in Financial Futures (TFF) — Socrata API
-          # We get most recent week, filtered for our 8 currencies
           base_url = 'https://publicreporting.cftc.gov/resource/gpe5-46if.json'
 
+          # Mapping currency → instrument name in CFTC TFF dataset
           mapping = {
               'EURO FX - CHICAGO MERCANTILE EXCHANGE': 'EUR',
               'BRITISH POUND - CHICAGO MERCANTILE EXCHANGE': 'GBP',
               'JAPANESE YEN - CHICAGO MERCANTILE EXCHANGE': 'JPY',
               'AUSTRALIAN DOLLAR - CHICAGO MERCANTILE EXCHANGE': 'AUD',
-              'NEW ZEALAND DOLLAR - CHICAGO MERCANTILE EXCHANGE': 'NZD',
+              'NZ DOLLAR - CHICAGO MERCANTILE EXCHANGE': 'NZD',
               'CANADIAN DOLLAR - CHICAGO MERCANTILE EXCHANGE': 'CAD',
               'SWISS FRANC - CHICAGO MERCANTILE EXCHANGE': 'CHF',
-              'U.S. DOLLAR INDEX - ICE FUTURES U.S.': 'USD',
           }
 
-          # Build SoQL query
           where_clauses = ['market_and_exchange_names="' + name + '"' for name in mapping.keys()]
           where = ' OR '.join(where_clauses)
           params = {
@@ -63,7 +60,6 @@ jobs:
               print(f"API fetch failed: {e}")
               data = []
 
-          # Take most recent record per currency
           result = {}
           latest_date = None
           for record in data:
@@ -71,7 +67,7 @@ jobs:
               if name in mapping:
                   symbol = mapping[name]
                   if symbol in result:
-                      continue  # already have most recent
+                      continue
                   try:
                       lev_long = int(record.get('lev_money_positions_long', 0))
                       lev_short = int(record.get('lev_money_positions_short', 0))
@@ -85,11 +81,21 @@ jobs:
                   except (ValueError, TypeError) as e:
                       print(f"  Parse error for {symbol}: {e}")
 
+          # Derive USD from average of other currencies (inverted)
+          # If most other currencies are bearish vs USD, USD is bullish
+          if result:
+              others = [v for v in result.values()]
+              if others:
+                  avg_others = sum(others) / len(others)
+                  usd_derived = round(-avg_others, 4)
+                  result['USD'] = usd_derived
+                  print(f"USD derived from average of other currencies: {usd_derived:+.3f}")
+
           if result:
               forex_cot = {
                   'updated_at': datetime.now(timezone.utc).isoformat(),
                   'report_date': latest_date or 'unknown',
-                  'source': 'CFTC Public API (gpe5-46if)',
+                  'source': 'CFTC Public API (gpe5-46if) + USD derived',
                   'mirror_by': 'github-actions/qep-calendar-mirror',
                   'currencies': result,
                   'count': len(result),
@@ -97,7 +103,7 @@ jobs:
               with open('data/cot/forex_cot.json', 'w') as f:
                   json.dump(forex_cot, f, indent=2)
               print(f"Forex COT saved: {len(result)} currencies (week of {latest_date})")
-              for c, v in result.items():
+              for c, v in sorted(result.items()):
                   print(f"  {c}: {v:+.3f}")
           else:
               print("No fresh forex COT data, keeping existing file")
@@ -111,7 +117,6 @@ jobs:
           import urllib.parse
           from datetime import datetime, timezone
 
-          # Commodity Disaggregated COT — Socrata API
           base_url = 'https://publicreporting.cftc.gov/resource/72hh-3qpy.json'
 
           mapping = {
