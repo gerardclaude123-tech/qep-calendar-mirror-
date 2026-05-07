@@ -1,8 +1,8 @@
 {
-  "generated_at": "pending_first_run",
-  "forex_currencies_count": 0,
+  "generated_at": "2026-05-07T22:29:52.077930+00:00",
+  "forex_currencies_count": 5,
   "commodities_count": 0,
   "source": "CFTC.gov",
   "mirror_by": "github-actions/qep-calendar-mirror",
-  "next_refresh": "Friday 21:00 UTC (after CFTC weekly publication)"
+  "next_refresh": "Friday 21:00 UTC"
 }

@@ -1,7 +1,13 @@
 {
-  "updated_at": "pending_first_run",
+  "updated_at": "2026-05-07T22:29:52.002919+00:00",
   "source": "CFTC FinFutWk.txt",
   "mirror_by": "github-actions/qep-calendar-mirror",
-  "currencies": {},
-  "count": 0
+  "currencies": {
+    "CAD": -1.0,
+    "CHF": -1.0,
+    "JPY": -1.0,
+    "EUR": -1.0,
+    "AUD": -1.0
+  },
+  "count": 5
 }
