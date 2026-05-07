@@ -1,7 +1,49 @@
 {
-  "updated_at": "pending_first_run",
-  "source": "CFTC deacot.txt (Disaggregated)",
+  "updated_at": "2026-05-07T22:38:39.817258+00:00",
+  "report_date": "2026-04-28",
+  "source": "CFTC Public API (72hh-3qpy)",
   "mirror_by": "github-actions/qep-calendar-mirror",
-  "instruments": {},
-  "count": 0
+  "instruments": {
+    "XAU": {
+      "net": -105061,
+      "mm_net": 89752,
+      "mm_long": 122257,
+      "mm_short": 32505,
+      "producer_net": -20192,
+      "swap_net": -174621,
+      "oi": 369530,
+      "week": "2026-04-28"
+    },
+    "COPPER": {
+      "net": -11092,
+      "mm_net": 60937,
+      "mm_long": 76037,
+      "mm_short": 15100,
+      "producer_net": -103114,
+      "swap_net": 31085,
+      "oi": 230596,
+      "week": "2026-04-28"
+    },
+    "XAG": {
+      "net": -29846,
+      "mm_net": 10606,
+      "mm_long": 14576,
+      "mm_short": 3970,
+      "producer_net": -18110,
+      "swap_net": -22342,
+      "oi": 101275,
+      "week": "2026-04-28"
+    },
+    "WTI": {
+      "net": 2378,
+      "mm_net": -37833,
+      "mm_long": 10674,
+      "mm_short": 48507,
+      "producer_net": 127749,
+      "swap_net": -87538,
+      "oi": 855542,
+      "week": "2026-04-28"
+    }
+  },
+  "count": 4
 }
