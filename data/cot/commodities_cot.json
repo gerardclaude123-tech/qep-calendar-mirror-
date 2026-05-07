@@ -1,0 +1,7 @@
+{
+  "updated_at": "pending_first_run",
+  "source": "CFTC deacot.txt (Disaggregated)",
+  "mirror_by": "github-actions/qep-calendar-mirror",
+  "instruments": {},
+  "count": 0
+}
