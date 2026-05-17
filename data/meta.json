@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-05-16T23:38:08.180205+00:00",
-  "total_events": 93,
-  "high_impact": 9,
-  "medium_impact": 5,
+  "generated_at": "2026-05-17T08:35:31.829908+00:00",
+  "total_events": 114,
+  "high_impact": 8,
+  "medium_impact": 17,
   "source": "faireconomy.media",
   "mirror_by": "github-actions/qep-calendar-mirror"
 }
