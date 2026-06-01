@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-30T11:05:02.151270+00:00",
+  "updated_at": "2026-06-01T21:03:16.762726+00:00",
   "report_date": "2026-05-26",
   "source": "CFTC Public API (gpe5-46if) + USD derived",
   "mirror_by": "github-actions/qep-calendar-mirror",
