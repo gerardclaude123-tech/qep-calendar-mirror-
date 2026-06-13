@@ -1,48 +1,48 @@
 {
-  "updated_at": "2026-06-08T17:35:46.644992+00:00",
-  "report_date": "2026-06-02",
+  "updated_at": "2026-06-13T08:39:17.493382+00:00",
+  "report_date": "2026-06-09",
   "source": "CFTC Public API (72hh-3qpy)",
   "mirror_by": "github-actions/qep-calendar-mirror",
   "instruments": {
     "XAU": {
-      "net": -94166,
-      "mm_net": 112179,
-      "mm_long": 129367,
-      "mm_short": 17188,
-      "producer_net": -20154,
-      "swap_net": -186191,
-      "oi": 326052,
-      "week": "2026-06-02"
+      "net": -95173,
+      "mm_net": 105863,
+      "mm_long": 126280,
+      "mm_short": 20417,
+      "producer_net": -19300,
+      "swap_net": -181736,
+      "oi": 332709,
+      "week": "2026-06-09"
     },
     "COPPER": {
-      "net": -12898,
-      "mm_net": 75747,
-      "mm_long": 91214,
-      "mm_short": 15467,
-      "producer_net": -114904,
-      "swap_net": 26259,
-      "oi": 276892,
-      "week": "2026-06-02"
+      "net": -14731,
+      "mm_net": 69204,
+      "mm_long": 87096,
+      "mm_short": 17892,
+      "producer_net": -109260,
+      "swap_net": 25325,
+      "oi": 274331,
+      "week": "2026-06-09"
     },
     "XAG": {
-      "net": -32217,
-      "mm_net": 10444,
-      "mm_long": 17047,
-      "mm_short": 6603,
-      "producer_net": -17993,
-      "swap_net": -24668,
-      "oi": 102809,
-      "week": "2026-06-02"
+      "net": -29965,
+      "mm_net": 10403,
+      "mm_long": 16336,
+      "mm_short": 5933,
+      "producer_net": -16659,
+      "swap_net": -23709,
+      "oi": 103440,
+      "week": "2026-06-09"
     },
     "WTI": {
-      "net": -19697,
-      "mm_net": -26694,
-      "mm_long": 6038,
-      "mm_short": 32732,
-      "producer_net": 100592,
-      "swap_net": -93595,
-      "oi": 816733,
-      "week": "2026-06-02"
+      "net": -32214,
+      "mm_net": -27568,
+      "mm_long": 5871,
+      "mm_short": 33439,
+      "producer_net": 88963,
+      "swap_net": -93609,
+      "oi": 818492,
+      "week": "2026-06-09"
     }
   },
   "count": 4
