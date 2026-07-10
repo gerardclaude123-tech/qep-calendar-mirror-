@@ -1,48 +1,48 @@
 {
-  "updated_at": "2026-07-06T09:50:25.498933+00:00",
-  "report_date": "2026-06-23",
+  "updated_at": "2026-07-10T22:06:20.894444+00:00",
+  "report_date": "2026-07-07",
   "source": "CFTC Public API (72hh-3qpy)",
   "mirror_by": "github-actions/qep-calendar-mirror",
   "instruments": {
     "XAU": {
-      "net": -90009,
-      "mm_net": 115395,
-      "mm_long": 131102,
-      "mm_short": 15707,
-      "producer_net": -9336,
-      "swap_net": -196068,
-      "oi": 352167,
-      "week": "2026-06-23"
+      "net": -106121,
+      "mm_net": 116161,
+      "mm_long": 134941,
+      "mm_short": 18780,
+      "producer_net": -20986,
+      "swap_net": -201296,
+      "oi": 371776,
+      "week": "2026-07-07"
     },
     "COPPER": {
-      "net": -13931,
-      "mm_net": 66547,
-      "mm_long": 82442,
-      "mm_short": 15895,
-      "producer_net": -97586,
-      "swap_net": 17108,
-      "oi": 268800,
-      "week": "2026-06-23"
+      "net": -14386,
+      "mm_net": 58784,
+      "mm_long": 74757,
+      "mm_short": 15973,
+      "producer_net": -90983,
+      "swap_net": 17813,
+      "oi": 250948,
+      "week": "2026-07-07"
     },
     "XAG": {
-      "net": -28499,
-      "mm_net": 11741,
-      "mm_long": 17559,
-      "mm_short": 5818,
-      "producer_net": -13722,
-      "swap_net": -26518,
-      "oi": 108944,
-      "week": "2026-06-23"
+      "net": -29894,
+      "mm_net": 13201,
+      "mm_long": 19294,
+      "mm_short": 6093,
+      "producer_net": -13356,
+      "swap_net": -29739,
+      "oi": 104859,
+      "week": "2026-07-07"
     },
     "WTI": {
-      "net": -34634,
-      "mm_net": -18387,
-      "mm_long": 3786,
-      "mm_short": 22173,
-      "producer_net": 66519,
-      "swap_net": -82766,
-      "oi": 803067,
-      "week": "2026-06-23"
+      "net": -23741,
+      "mm_net": -15417,
+      "mm_long": 5080,
+      "mm_short": 20497,
+      "producer_net": 70281,
+      "swap_net": -78605,
+      "oi": 801410,
+      "week": "2026-07-07"
     }
   },
   "count": 4
