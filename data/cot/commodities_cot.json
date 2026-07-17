@@ -1,48 +1,48 @@
 {
-  "updated_at": "2026-07-13T08:41:46.431859+00:00",
-  "report_date": "2026-07-07",
+  "updated_at": "2026-07-17T21:55:42.425696+00:00",
+  "report_date": "2026-07-14",
   "source": "CFTC Public API (72hh-3qpy)",
   "mirror_by": "github-actions/qep-calendar-mirror",
   "instruments": {
-    "XAU": {
-      "net": -106121,
-      "mm_net": 116161,
-      "mm_long": 134941,
-      "mm_short": 18780,
-      "producer_net": -20986,
-      "swap_net": -201296,
-      "oi": 371776,
-      "week": "2026-07-07"
-    },
-    "COPPER": {
-      "net": -14386,
-      "mm_net": 58784,
-      "mm_long": 74757,
-      "mm_short": 15973,
-      "producer_net": -90983,
-      "swap_net": 17813,
-      "oi": 250948,
-      "week": "2026-07-07"
+    "WTI": {
+      "net": -42922,
+      "mm_net": -24220,
+      "mm_long": 4808,
+      "mm_short": 29028,
+      "producer_net": 60007,
+      "swap_net": -78709,
+      "oi": 791680,
+      "week": "2026-07-14"
     },
     "XAG": {
-      "net": -29894,
-      "mm_net": 13201,
-      "mm_long": 19294,
-      "mm_short": 6093,
-      "producer_net": -13356,
-      "swap_net": -29739,
-      "oi": 104859,
-      "week": "2026-07-07"
+      "net": -31096,
+      "mm_net": 11501,
+      "mm_long": 17554,
+      "mm_short": 6053,
+      "producer_net": -12708,
+      "swap_net": -29889,
+      "oi": 105023,
+      "week": "2026-07-14"
     },
-    "WTI": {
-      "net": -23741,
-      "mm_net": -15417,
-      "mm_long": 5080,
-      "mm_short": 20497,
-      "producer_net": 70281,
-      "swap_net": -78605,
-      "oi": 801410,
-      "week": "2026-07-07"
+    "COPPER": {
+      "net": -13431,
+      "mm_net": 60185,
+      "mm_long": 77338,
+      "mm_short": 17153,
+      "producer_net": -86384,
+      "swap_net": 12768,
+      "oi": 259873,
+      "week": "2026-07-14"
+    },
+    "XAU": {
+      "net": -94009,
+      "mm_net": 120779,
+      "mm_long": 136905,
+      "mm_short": 16126,
+      "producer_net": -19149,
+      "swap_net": -195639,
+      "oi": 383689,
+      "week": "2026-07-14"
     }
   },
   "count": 4
