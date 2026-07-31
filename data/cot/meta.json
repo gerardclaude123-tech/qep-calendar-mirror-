@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-07-27T09:22:21.288144+00:00",
+  "generated_at": "2026-07-31T22:07:55.131410+00:00",
   "forex_currencies_count": 8,
-  "forex_report_date": "2026-07-21",
+  "forex_report_date": "2026-07-28",
   "commodities_count": 4,
-  "commodities_report_date": "2026-07-21",
+  "commodities_report_date": "2026-07-28",
   "source": "CFTC Public API (Socrata)",
   "mirror_by": "github-actions/qep-calendar-mirror",
   "next_refresh": "Friday 21:00 UTC"
