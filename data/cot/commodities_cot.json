@@ -1,48 +1,48 @@
 {
-  "updated_at": "2026-08-03T08:56:39.344031+00:00",
-  "report_date": "2026-07-28",
+  "updated_at": "2026-08-07T21:40:54.839072+00:00",
+  "report_date": "2026-08-04",
   "source": "CFTC Public API (72hh-3qpy)",
   "mirror_by": "github-actions/qep-calendar-mirror",
   "instruments": {
     "XAU": {
-      "net": -92514,
-      "mm_net": 119795,
-      "mm_long": 135093,
-      "mm_short": 15298,
-      "producer_net": -20549,
-      "swap_net": -191760,
-      "oi": 384603,
-      "week": "2026-07-28"
+      "net": -95725,
+      "mm_net": 130766,
+      "mm_long": 139809,
+      "mm_short": 9043,
+      "producer_net": -18856,
+      "swap_net": -207635,
+      "oi": 371551,
+      "week": "2026-08-04"
     },
     "COPPER": {
-      "net": -11153,
-      "mm_net": 65008,
-      "mm_long": 82988,
-      "mm_short": 17980,
-      "producer_net": -85279,
-      "swap_net": 9118,
-      "oi": 274552,
-      "week": "2026-07-28"
+      "net": -10411,
+      "mm_net": 75758,
+      "mm_long": 93173,
+      "mm_short": 17415,
+      "producer_net": -92844,
+      "swap_net": 6675,
+      "oi": 289395,
+      "week": "2026-08-04"
     },
     "XAG": {
-      "net": -29627,
-      "mm_net": 9182,
-      "mm_long": 17939,
-      "mm_short": 8757,
-      "producer_net": -13029,
-      "swap_net": -25780,
-      "oi": 106719,
-      "week": "2026-07-28"
+      "net": -28448,
+      "mm_net": 11974,
+      "mm_long": 20465,
+      "mm_short": 8491,
+      "producer_net": -13080,
+      "swap_net": -27342,
+      "oi": 111999,
+      "week": "2026-08-04"
     },
     "WTI": {
-      "net": -18456,
-      "mm_net": -9959,
-      "mm_long": 11360,
-      "mm_short": 21319,
-      "producer_net": 64024,
-      "swap_net": -72521,
-      "oi": 781193,
-      "week": "2026-07-28"
+      "net": -12845,
+      "mm_net": -7090,
+      "mm_long": 15256,
+      "mm_short": 22346,
+      "producer_net": 69531,
+      "swap_net": -75286,
+      "oi": 782189,
+      "week": "2026-08-04"
     }
   },
   "count": 4
