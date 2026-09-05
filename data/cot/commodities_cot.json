@@ -1,19 +1,9 @@
 {
-  "updated_at": "2026-09-04T22:51:32.881332+00:00",
+  "updated_at": "2026-09-05T09:48:18.070288+00:00",
   "report_date": "2026-09-01",
   "source": "CFTC Public API (72hh-3qpy)",
   "mirror_by": "github-actions/qep-calendar-mirror",
   "instruments": {
-    "XAU": {
-      "net": -127947,
-      "mm_net": 136771,
-      "mm_long": 149721,
-      "mm_short": 12950,
-      "producer_net": -31289,
-      "swap_net": -233429,
-      "oi": 415196,
-      "week": "2026-09-01"
-    },
     "WTI": {
       "net": 9318,
       "mm_net": -10747,
@@ -42,6 +32,16 @@
       "producer_net": -97022,
       "swap_net": 4915,
       "oi": 282640,
+      "week": "2026-09-01"
+    },
+    "XAU": {
+      "net": -127947,
+      "mm_net": 136771,
+      "mm_long": 149721,
+      "mm_short": 12950,
+      "producer_net": -31289,
+      "swap_net": -233429,
+      "oi": 415196,
       "week": "2026-09-01"
     }
   },
