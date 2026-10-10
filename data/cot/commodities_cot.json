@@ -1,48 +1,48 @@
 {
-  "updated_at": "2026-10-05T12:50:37.311618+00:00",
-  "report_date": "2026-09-29",
+  "updated_at": "2026-10-10T00:33:26.890543+00:00",
+  "report_date": "2026-10-06",
   "source": "CFTC Public API (72hh-3qpy)",
   "mirror_by": "github-actions/qep-calendar-mirror",
   "instruments": {
     "XAU": {
-      "net": -130649,
-      "mm_net": 120318,
-      "mm_long": 131711,
-      "mm_short": 11393,
-      "producer_net": -21263,
-      "swap_net": -229704,
-      "oi": 406456,
-      "week": "2026-09-29"
-    },
-    "WTI": {
-      "net": -1030,
-      "mm_net": -2698,
-      "mm_long": 19556,
-      "mm_short": 22254,
-      "producer_net": 74931,
-      "swap_net": -73263,
-      "oi": 742626,
-      "week": "2026-09-29"
-    },
-    "XAG": {
-      "net": -32396,
-      "mm_net": 7614,
-      "mm_long": 16886,
-      "mm_short": 9272,
-      "producer_net": -16512,
-      "swap_net": -23498,
-      "oi": 107047,
-      "week": "2026-09-29"
+      "net": -133540,
+      "mm_net": 110987,
+      "mm_long": 127101,
+      "mm_short": 16114,
+      "producer_net": -19501,
+      "swap_net": -225026,
+      "oi": 396109,
+      "week": "2026-10-06"
     },
     "COPPER": {
-      "net": -16783,
-      "mm_net": 78058,
-      "mm_long": 92094,
-      "mm_short": 14036,
-      "producer_net": -104340,
-      "swap_net": 9499,
-      "oi": 301201,
-      "week": "2026-09-29"
+      "net": -16789,
+      "mm_net": 61134,
+      "mm_long": 76836,
+      "mm_short": 15702,
+      "producer_net": -92720,
+      "swap_net": 14797,
+      "oi": 304033,
+      "week": "2026-10-06"
+    },
+    "XAG": {
+      "net": -34064,
+      "mm_net": 7528,
+      "mm_long": 16457,
+      "mm_short": 8929,
+      "producer_net": -16253,
+      "swap_net": -25339,
+      "oi": 105130,
+      "week": "2026-10-06"
+    },
+    "WTI": {
+      "net": 5229,
+      "mm_net": -4534,
+      "mm_long": 18871,
+      "mm_short": 23405,
+      "producer_net": 85490,
+      "swap_net": -75727,
+      "oi": 752148,
+      "week": "2026-10-06"
     }
   },
   "count": 4
