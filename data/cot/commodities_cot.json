@@ -1,48 +1,48 @@
 {
-  "updated_at": "2026-10-26T11:41:59.231151+00:00",
-  "report_date": "2026-10-20",
+  "updated_at": "2026-10-31T00:31:34.337955+00:00",
+  "report_date": "2026-10-27",
   "source": "CFTC Public API (72hh-3qpy)",
   "mirror_by": "github-actions/qep-calendar-mirror",
   "instruments": {
     "XAU": {
-      "net": -131376,
-      "mm_net": 104206,
-      "mm_long": 120970,
-      "mm_short": 16764,
-      "producer_net": -14783,
-      "swap_net": -220799,
-      "oi": 402279,
-      "week": "2026-10-20"
-    },
-    "COPPER": {
-      "net": -16606,
-      "mm_net": 47690,
-      "mm_long": 67225,
-      "mm_short": 19535,
-      "producer_net": -77406,
-      "swap_net": 13110,
-      "oi": 327119,
-      "week": "2026-10-20"
-    },
-    "XAG": {
-      "net": -33671,
-      "mm_net": 3505,
-      "mm_long": 16180,
-      "mm_short": 12675,
-      "producer_net": -15029,
-      "swap_net": -22147,
-      "oi": 113992,
-      "week": "2026-10-20"
+      "net": -110062,
+      "mm_net": 105562,
+      "mm_long": 122508,
+      "mm_short": 16946,
+      "producer_net": -9574,
+      "swap_net": -206050,
+      "oi": 396810,
+      "week": "2026-10-27"
     },
     "WTI": {
-      "net": 19067,
-      "mm_net": -4713,
-      "mm_long": 16334,
-      "mm_short": 21047,
-      "producer_net": 113469,
-      "swap_net": -89689,
-      "oi": 755018,
-      "week": "2026-10-20"
+      "net": 16384,
+      "mm_net": -9000,
+      "mm_long": 13952,
+      "mm_short": 22952,
+      "producer_net": 116552,
+      "swap_net": -91168,
+      "oi": 770547,
+      "week": "2026-10-27"
+    },
+    "XAG": {
+      "net": -32366,
+      "mm_net": 3321,
+      "mm_long": 16864,
+      "mm_short": 13543,
+      "producer_net": -15231,
+      "swap_net": -20456,
+      "oi": 116226,
+      "week": "2026-10-27"
+    },
+    "COPPER": {
+      "net": -12679,
+      "mm_net": 40575,
+      "mm_long": 62199,
+      "mm_short": 21624,
+      "producer_net": -65243,
+      "swap_net": 11989,
+      "oi": 337019,
+      "week": "2026-10-27"
     }
   },
   "count": 4
