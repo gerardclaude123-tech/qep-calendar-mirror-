@@ -1,48 +1,48 @@
 {
-  "updated_at": "2026-11-02T13:58:57.021786+00:00",
-  "report_date": "2026-10-27",
+  "updated_at": "2026-11-07T00:41:02.526389+00:00",
+  "report_date": "2026-11-03",
   "source": "CFTC Public API (72hh-3qpy)",
   "mirror_by": "github-actions/qep-calendar-mirror",
   "instruments": {
-    "XAU": {
-      "net": -110062,
-      "mm_net": 105562,
-      "mm_long": 122508,
-      "mm_short": 16946,
-      "producer_net": -9574,
-      "swap_net": -206050,
-      "oi": 396810,
-      "week": "2026-10-27"
-    },
     "WTI": {
-      "net": 16384,
-      "mm_net": -9000,
-      "mm_long": 13952,
-      "mm_short": 22952,
-      "producer_net": 116552,
-      "swap_net": -91168,
-      "oi": 770547,
-      "week": "2026-10-27"
+      "net": 12617,
+      "mm_net": -11818,
+      "mm_long": 13415,
+      "mm_short": 25233,
+      "producer_net": 120578,
+      "swap_net": -96143,
+      "oi": 769009,
+      "week": "2026-11-03"
     },
     "XAG": {
-      "net": -32366,
-      "mm_net": 3321,
-      "mm_long": 16864,
-      "mm_short": 13543,
-      "producer_net": -15231,
-      "swap_net": -20456,
-      "oi": 116226,
-      "week": "2026-10-27"
+      "net": -30721,
+      "mm_net": 4035,
+      "mm_long": 17522,
+      "mm_short": 13487,
+      "producer_net": -13145,
+      "swap_net": -21611,
+      "oi": 115583,
+      "week": "2026-11-03"
     },
     "COPPER": {
-      "net": -12679,
-      "mm_net": 40575,
-      "mm_long": 62199,
-      "mm_short": 21624,
-      "producer_net": -65243,
-      "swap_net": 11989,
-      "oi": 337019,
-      "week": "2026-10-27"
+      "net": -7033,
+      "mm_net": 34890,
+      "mm_long": 58634,
+      "mm_short": 23744,
+      "producer_net": -55218,
+      "swap_net": 13295,
+      "oi": 327850,
+      "week": "2026-11-03"
+    },
+    "XAU": {
+      "net": -101288,
+      "mm_net": 103614,
+      "mm_long": 122283,
+      "mm_short": 18669,
+      "producer_net": -8912,
+      "swap_net": -195990,
+      "oi": 399169,
+      "week": "2026-11-03"
     }
   },
   "count": 4

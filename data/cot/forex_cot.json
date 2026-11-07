@@ -1,17 +1,17 @@
 {
-  "updated_at": "2026-11-02T13:58:56.123580+00:00",
-  "report_date": "2026-10-27",
+  "updated_at": "2026-11-07T00:41:01.915646+00:00",
+  "report_date": "2026-11-03",
   "source": "CFTC Public API (gpe5-46if) + USD derived",
   "mirror_by": "github-actions/qep-calendar-mirror",
   "currencies": {
-    "CAD": -0.6833,
-    "CHF": -0.5096,
-    "GBP": 0.1694,
-    "JPY": -0.0874,
-    "EUR": -0.2225,
-    "NZD": -0.5084,
+    "CAD": -0.6301,
+    "CHF": -0.5309,
+    "GBP": 0.2666,
+    "JPY": -0.0828,
+    "EUR": -0.2478,
+    "NZD": -0.4864,
     "AUD": 0.3871,
-    "USD": 0.2078
+    "USD": 0.1892
   },
   "count": 8
 }
